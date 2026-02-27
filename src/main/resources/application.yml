@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: ai-code-chat
+
+langchain4j:
+  community:
+    dashscope:
+      chat-model:
+        model-name: deepseek-r1
+        api-key: <you key>
