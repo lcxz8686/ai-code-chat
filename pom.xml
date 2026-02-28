@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.harmony</groupId>
-    <artifactId>code-talk</artifactId>
+    <artifactId>ai-code-chat</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>ai-code-chat</name>
     <description>ai-code-chat</description>
