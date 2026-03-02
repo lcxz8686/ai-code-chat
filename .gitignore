@@ -4,6 +4,7 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 application-local.yml
+**/node_modules/**
 
 ### STS ###
 .apt_generated
