@@ -1,9 +1,12 @@
 package com.harmony.aicodechat.ai;
 
+import dev.langchain4j.rag.content.Content;
 import dev.langchain4j.service.Result;
 import jakarta.annotation.Resource;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.List;
 
 @SpringBootTest
 class AiCodeChatServiceFactoryTest {
@@ -28,9 +31,24 @@ class AiCodeChatServiceFactoryTest {
 
     @Test
     void chatWithRag() {
-        Result<String> result = aiCodeChatService.chatWithRag("怎么学习 Java？有哪些常见面试题？");
-        System.out.println(result.content());
-        System.out.println(result.sources());
+        Result<String> result = aiCodeChatService.chatWithRag("Java程序员在 MySQL方面 需要关注什么核心的面试也题目？");
+        String content = result.content();
+//        List<Content> sources = result.sources();
+//        for (Content source : sources) {
+//            System.out.println("===========");
+//            System.out.println(source.metadata());
+//            System.out.println(source.textSegment().text());
+//            System.out.println("===========");
+//        }
+        System.out.println(content);
+//        System.out.println(sources);
     }
+
+    @Test
+    void chatWithMcp() {
+        String result = aiCodeChatService.chat("什么是程序员鱼皮的编程导航？");
+        System.out.println(result);
+    }
+
 
 }

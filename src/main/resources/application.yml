@@ -11,3 +11,6 @@ langchain4j:
       embedding-model:
         model-name: text-embedding-v2
         api-key: sk-b80db79d4ac24cb8b4c6c53ee60fb387
+
+bigmodel:
+  api-key: <API_KEY>

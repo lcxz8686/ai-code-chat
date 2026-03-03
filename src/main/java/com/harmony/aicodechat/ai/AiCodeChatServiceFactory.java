@@ -1,5 +1,6 @@
 package com.harmony.aicodechat.ai;
 
+import dev.langchain4j.mcp.McpToolProvider;
 import dev.langchain4j.memory.ChatMemory;
 import dev.langchain4j.memory.chat.MessageWindowChatMemory;
 import dev.langchain4j.model.chat.ChatModel;
@@ -24,6 +25,9 @@ public class AiCodeChatServiceFactory {
     @Resource
     private ContentRetriever contentRetriever;
 
+    @Resource
+    private McpToolProvider mcpToolProvider;
+
     @Bean
     public AiCodeChatService aiCodeChatService() {
         // 会话记忆
@@ -33,6 +37,7 @@ public class AiCodeChatServiceFactory {
                 .chatModel(qwenChatModel)
                 .chatMemory(chatMemory)
                 .contentRetriever(contentRetriever) // RAG 检索增强生成
+//                .toolProvider(mcpToolProvider) // MCP 工具调用
                 .build();
     }
 }

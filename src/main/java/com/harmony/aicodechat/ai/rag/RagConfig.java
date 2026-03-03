@@ -1,4 +1,4 @@
-package com.harmony.aicodechat.rag;
+package com.harmony.aicodechat.ai.rag;
 
 import dev.langchain4j.data.document.Document;
 import dev.langchain4j.data.document.loader.FileSystemDocumentLoader;
