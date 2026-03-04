@@ -41,7 +41,7 @@
         </div>
         <div class="message-content">
           <div class="message-role">{{ message.role === 'user' ? '用户' : 'AI助手' }}</div>
-          <div class="message-text">{{ message.content }}</div>
+          <div class="message-text" v-html="marked(message.content)"></div>
         </div>
         <div v-if="message.role === 'user'" class="message-avatar user-avatar">
           <div class="avatar-icon">👤</div>
@@ -92,6 +92,7 @@
 
 <script setup>
 import { ref, onMounted, nextTick, onUnmounted } from 'vue'
+import { marked } from 'marked'
 
 const messages = ref([])
 const inputMessage = ref('')
@@ -141,7 +142,7 @@ const startStream = (message) => {
   isStreaming.value = true
   streamingContent.value = ''
   
-  const url = `http://localhost:8081/api/ai/chat?memoryId=${memoryId.value}&message=${encodeURIComponent(message)}`
+  const url = `http://localhost:8081/api/ai/chat?memoryId=${(memoryId.value)}&message=${encodeURIComponent(message)}`
   
   eventSource = new EventSource(url)
   
@@ -360,6 +361,81 @@ onUnmounted(() => {
   line-height: 1.6;
   white-space: pre-wrap;
   word-wrap: break-word;
+}
+
+.message-text h1,
+.message-text h2,
+.message-text h3,
+.message-text h4,
+.message-text h5,
+.message-text h6 {
+  margin: 16px 0 8px 0;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.message-text h1 {
+  font-size: 24px;
+}
+
+.message-text h2 {
+  font-size: 20px;
+}
+
+.message-text h3 {
+  font-size: 18px;
+}
+
+.message-text p {
+  margin: 8px 0;
+}
+
+.message-text ul,
+.message-text ol {
+  margin: 8px 0;
+  padding-left: 24px;
+}
+
+.message-text li {
+  margin: 4px 0;
+}
+
+.message-text code {
+  background-color: #f1f3f4;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 14px;
+}
+
+.message-text pre {
+  background-color: #f1f3f4;
+  padding: 12px;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin: 12px 0;
+}
+
+.message-text pre code {
+  background-color: transparent;
+  padding: 0;
+}
+
+.message-text blockquote {
+  border-left: 4px solid #4361ee;
+  padding-left: 16px;
+  margin: 12px 0;
+  color: #666;
+  font-style: italic;
+}
+
+.message-text a {
+  color: #4361ee;
+  text-decoration: none;
+}
+
+.message-text a:hover {
+  text-decoration: underline;
 }
 
 .cursor {

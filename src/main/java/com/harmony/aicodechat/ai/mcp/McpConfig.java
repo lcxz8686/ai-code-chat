@@ -9,13 +9,16 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-@Configuration
+/**
+ * 这个项目不使用MCP
+ */
+//@Configuration
 public class McpConfig {
 
-    @Value("${bigmodel.api-key}")
+//    @Value("${bigmodel.api-key}")
     private String apiKey;
 
-    @Bean
+//    @Bean
     public McpToolProvider mcpToolProvider() {
         // 和 MCP 服务通讯
         McpTransport transport = new HttpMcpTransport.Builder()
