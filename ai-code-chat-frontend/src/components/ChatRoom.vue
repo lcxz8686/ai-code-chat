@@ -1,8 +1,14 @@
 <template>
   <div class="chat-room">
     <div class="chat-header">
-      <h1>AI 编程小助手</h1>
-      <div class="chat-info">会话ID: {{ memoryId }}</div>
+      <div class="chat-header-main">
+        <h1>AI 编程小助手</h1>
+        <p class="chat-subtitle">专注编程学习与面试辅导的智能助手</p>
+      </div>
+      <div class="chat-header-meta">
+        <span class="chat-info-label">会话 ID</span>
+        <span class="chat-info-value">{{ memoryId }}</span>
+      </div>
     </div>
     
     <div class="chat-messages" ref="messagesContainer">
@@ -41,7 +47,7 @@
         </div>
         <div class="message-content">
           <div class="message-role">{{ message.role === 'user' ? '用户' : 'AI助手' }}</div>
-          <div class="message-text" v-html="marked(message.content)"></div>
+          <div class="message-text" v-html="renderMarkdown(message.content)"></div>
         </div>
         <div v-if="message.role === 'user'" class="message-avatar user-avatar">
           <div class="avatar-icon">👤</div>
@@ -93,6 +99,16 @@
 <script setup>
 import { ref, onMounted, nextTick, onUnmounted } from 'vue'
 import { marked } from 'marked'
+
+const renderer = new marked.Renderer()
+renderer.link = (href, title, text) => {
+  const safeHref = href || '#'
+  const titleAttr = title ? ` title="${title}"` : ''
+  return `<a href="${safeHref}" target="_blank" rel="noopener noreferrer"${titleAttr}>${text}</a>`
+}
+marked.use({ renderer })
+
+const renderMarkdown = (content) => marked.parse(content || '')
 
 const messages = ref([])
 const inputMessage = ref('')
@@ -202,34 +218,63 @@ onUnmounted(() => {
   display: flex;
   flex-direction: column;
   height: 100vh;
-  background-color: #f8f9fa;
+  background: radial-gradient(circle at top left, #e3f2fd 0, #f8f9fa 40%, #f3f4ff 100%);
 }
 
 .chat-header {
   background: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%);
   color: white;
-  padding: 20px;
+  padding: 18px 32px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.chat-header-main {
+  max-width: 70%;
 }
 
 .chat-header h1 {
   font-size: 24px;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
   font-weight: 600;
 }
 
-.chat-info {
+.chat-subtitle {
   font-size: 14px;
   opacity: 0.9;
+}
+
+.chat-header-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.chat-info-label {
+  font-size: 12px;
+  opacity: 0.85;
+}
+
+.chat-info-value {
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.16);
+  font-size: 12px;
+  letter-spacing: 0.02em;
 }
 
 .chat-messages {
   flex: 1;
   overflow-y: auto;
-  padding: 20px;
+  padding: 24px 24px 40px;
   display: flex;
   flex-direction: column;
   gap: 20px;
+  align-items: center;
 }
 
 /* 欢迎信息 */
@@ -241,7 +286,7 @@ onUnmounted(() => {
   border-radius: 16px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
   max-width: 800px;
-  align-self: center;
+  align-self: stretch;
   margin-top: 40px;
 }
 
@@ -312,7 +357,7 @@ onUnmounted(() => {
   animation: slideIn 0.3s ease-out;
   gap: 12px;
   max-width: 800px;
-  align-self: flex-start;
+  align-self: stretch;
 }
 
 .message.user {
@@ -326,7 +371,7 @@ onUnmounted(() => {
 }
 
 .message-content {
-  max-width: 70%;
+  max-width: 72%;
   padding: 16px;
   border-radius: 16px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
@@ -465,14 +510,16 @@ onUnmounted(() => {
 /* 输入区域 */
 .chat-input {
   background: white;
-  padding: 20px;
+  padding: 30px 10px 10px;
   border-top: 1px solid #e9ecef;
   box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+  display: flex;
+  justify-content: center;
 }
 
 .input-container {
-  max-width: 800px;
-  margin: 0 auto;
+  width: 100%;
+  max-width: 760px;
   border: 1px solid #e9ecef;
   border-radius: 12px;
   overflow: hidden;
@@ -559,6 +606,60 @@ onUnmounted(() => {
 .send-button:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+}
+
+/* 小屏幕适配 */
+@media (max-width: 768px) {
+  .chat-header {
+    padding: 14px 16px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .chat-header-main {
+    max-width: 100%;
+  }
+
+  .chat-header h1 {
+    font-size: 20px;
+  }
+
+  .chat-subtitle {
+    font-size: 13px;
+  }
+
+  .chat-header-meta {
+    align-items: flex-start;
+  }
+
+  .chat-messages {
+    padding: 16px 12px 28px;
+  }
+
+  .welcome-message {
+    flex-direction: column;
+    margin-top: 24px;
+  }
+
+  .message {
+    max-width: 100%;
+  }
+
+  .message-content {
+    max-width: 100%;
+  }
+
+  .chat-input {
+    padding: 10px 12px 16px;
+  }
+
+  .input-container {
+    border-radius: 10px;
+  }
+
+  .input-container textarea {
+    min-height: 80px;
+  }
 }
 
 /* 滚动条样式 */
