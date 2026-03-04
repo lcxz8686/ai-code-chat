@@ -4,6 +4,12 @@
 
 基于大语言模型的智能编程问答助手
 
+[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.5.3-brightgreen.svg)](https://spring.io/projects/spring-boot)
+[![Vue.js](https://img.shields.io/badge/Vue.js-3.3.4-4FC08D.svg)](https://vuejs.org/)
+[![LangChain4j](https://img.shields.io/badge/LangChain4j-1.1.0-blue.svg)](https://github.com/langchain4j/langchain4j)
+[![Java](https://img.shields.io/badge/Java-21-orange.svg)](https://www.oracle.com/java/)
+
+
 ## 项目简介
 
 AI Code Chat 是一个前后端分离的智能编程问答系统，后端采用 Spring Boot 框架，前端使用 Vue.js + Vite 构建。系统集成了通义千问（Qwen）大模型，提供智能代码问答、面试题检索等功能。
